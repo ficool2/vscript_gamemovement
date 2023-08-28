@@ -31,8 +31,7 @@ The library includes 2 examples:
 Each instance of the `CGameMovement` class fetches various convar values such as `sv_accelerate`, `sv_gravity`, etc. You can override these afterwards per-class if you desire different values, for example `movement.sv_gravity = 500.0`. See the variables section of the `CGameMovement` class at the bottom in `gamemovement.nut` for reference.
 
 Note that the library also setups the following when included:
-* Constant folding (if not already done so)
-* Defines global constants `MASK_PLAYERSOLID` and `DEFAULT_TICKRATE`
+* Defines constants `MASK_PLAYERSOLID` and `DEFAULT_TICKRATE`
 * Gets global entity handle to `worldspawn` named `WORLD`
 
 **NOTE:** `SetAbsVelocity` and `GetAbsVelocity` might be cleared by certain entities such as `base_boss`, so you must store the velocity off yourself instead. See `gamemovement_bot.nut` for an example.
