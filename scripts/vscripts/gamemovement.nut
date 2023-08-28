@@ -6,17 +6,20 @@ if (this != getroottable())
 	return;
 }
 
-if (!("ConstantNamingConvention" in this))
-{
-	foreach (a,b in Constants)
-		foreach (k,v in b)
-			if (!(k in this))
-				this[k] <- v;
-}
-
 AXES <- ["x", "y", "z"];
-MASK_PLAYERSOLID <- CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_PLAYERCLIP|CONTENTS_WINDOW|CONTENTS_MONSTER|CONTENTS_GRATE;
-DEFAULT_TICKRATE <- 0.015;
+const MASK_PLAYERSOLID = 33636363; // CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_PLAYERCLIP|CONTENTS_WINDOW|CONTENTS_MONSTER|CONTENTS_GRATE;
+const DEFAULT_TICKRATE = 0.015;
+
+// use manually defined constants for speed
+const MOVETYPE_NONE = 0;
+const MOVETYPE_ISOMETRIC = 1;
+const MOVETYPE_WALK = 2;
+const MOVETYPE_NOCLIP = 8;
+const MOVETYPE_LADDER = 9;
+const MOVETYPE_OBSERVER = 10;
+const COLLISION_GROUP_PLAYER_MOVEMENT = 8;
+const IN_JUMP = 2;
+const DIST_EPSILON = 0.03125;
 
 WORLD <- Entities.FindByClassname(null, "worldspawn");
 
@@ -113,7 +116,7 @@ class CGameMovement
 		local bMovingUpRapidly = zvel > 140.0;
 		
 		if (bMovingUpRapidly && m_ground && m_ground != WORLD)
-			bMovingUpRapidly = (zvel - m_ground.GetAbsVelocity().z) > 140.0;
+			bMovingUpRapidly = (zvel - (m_ground.IsValid() ? m_ground.GetAbsVelocity().z : Vector())) > 140.0;
 		
 		if (bMovingUpRapidly || (bMovingUp && m_movetype == MOVETYPE_LADDER))   
 		{
@@ -160,7 +163,7 @@ class CGameMovement
 			}
 			else
 			{
-				local vel = newGround.GetAbsVelocity();
+				local vel = newGround.IsValid() ? newGround.GetAbsVelocity() : Vector();
 				m_vecBaseVelocity -= vel; 
 				m_vecBaseVelocity.z = vel.z;
 			}
@@ -173,7 +176,7 @@ class CGameMovement
 			}
 			else
 			{
-				local vel = oldGround.GetAbsVelocity();
+				local vel = oldGround.IsValid() ? oldGround.GetAbsVelocity() : Vector();
 				m_vecBaseVelocity += vel;
 				m_vecBaseVelocity.z = vel.z;
 			}
