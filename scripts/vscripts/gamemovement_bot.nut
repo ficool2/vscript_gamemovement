@@ -3,7 +3,12 @@
 
 IncludeScript("gamemovement", getroottable());
 
-RAD2DEG <- 57.295779513;
+const RAD2DEG = 57.295779513;
+const NUM_TRAVERSE_TYPES = 9;
+const TEAM_ANY = -2;
+const TF_TEAM_BLUE = 3;
+const GO_WEST = 3;
+const GO_JUMP = 6;
 
 class BotPathPoint
 {
@@ -162,8 +167,7 @@ class ExampleBot
 			
 			my_forward = look_ang.Forward();
 			
-			movement.m_nButtons = IN_FORWARD;
-			
+			movement.m_nButtons = 0;
 			movement.m_flForwardMove = look_ang.Forward().Dot(move_vel);
 			movement.m_flSideMove = look_ang.Left().Dot(move_vel);
 			

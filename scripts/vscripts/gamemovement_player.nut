@@ -3,6 +3,12 @@
 
 IncludeScript("gamemovement");
 
+const IN_FORWARD = 8;
+const IN_BACK = 16;
+const IN_MOVELEFT = 512;
+const IN_MOVERIGHT = 1024;
+const MOVETYPE_NONE = 0;
+
 // default values from client
 cl_forwardspeed <- 450;
 cl_backspeed <- 450;
@@ -22,7 +28,7 @@ function OnPlayerThink()
 		return -1;
 	
 	if (self.GetMoveType() != MOVETYPE_NONE)
-		self.SetMoveType(MOVETYPE_NONE, MOVECOLLIDE_DEFAULT);
+		self.SetMoveType(MOVETYPE_NONE, 0);
 	
 	local buttons = NetProps.GetPropInt(self, "m_nButtons");	
 	movement.m_nButtons = buttons;
