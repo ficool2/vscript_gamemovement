@@ -7,8 +7,8 @@ if (this != getroottable())
 }
 
 AXES <- ["x", "y", "z"];
+DEFAULT_TICKRATE <- 0.015;
 const MASK_PLAYERSOLID = 33636363; // CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_PLAYERCLIP|CONTENTS_WINDOW|CONTENTS_MONSTER|CONTENTS_GRATE;
-const DEFAULT_TICKRATE = 0.015;
 
 // use manually defined constants for speed
 const MOVETYPE_NONE = 0;
